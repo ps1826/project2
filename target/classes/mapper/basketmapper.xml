@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="min.spring.basket">
+
+<!-- <select id="basketList" resultType="BasketVO">
+
+select
+basketID, goods_num, goods_name, price, image, amount
+from basket
+
+</select> -->
+
+<!-- ?�이�?-->
+<select id="basketList" parameterType="Hashmap" resultType="BasketVO">
+<![CDATA[
+select * from basket
+where m_id = #{m_id} 
+]]>
+</select>
+
+<insert id="basketAdd" parameterType="BasketVO">
+insert
+into basket (basketID, goods_num, goods_name, amount, image, price, m_id)
+values(basket_seq.nextval, #{goods_num}, #{goods_name}, #{amount}, #{image}, #{price}, #{m_id})
+</insert>
+
+<!-- <update id="basketupdate" parameterType="BasketVO">
+update basket  set amount= amount + #{amount}, price_sum = price_sum + #{price_sum}
+where m_id = #{m_id} and goods_num = #{goods_num}
+</update>
+ -->
+<delete id="basketDelete" parameterType="BasketVO">
+delete
+from basket
+where basketID= #{basketID}
+</delete>
+
+<select id="basketListCount" resultType="int">
+select count(*) from basket
+where m_id = #{m_id} and goods_num = #{goods_num}
+</select>
+
+<update id="basketPriceSum" parameterType="BasketVO">
+update basket set price_sum = price * amount
+</update>
+
+<update id="basketUpdateAmount" parameterType="BasketVO">
+update basket set amount = amount + #{amount}
+where m_id = #{m_id} and goods_num = #{goods_num}
+</update>
+
+
+
+
+</mapper>

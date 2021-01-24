@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hyun.spring.product">
+
+<select id="pcount" resultType="int">
+select count(*) from product
+</select>
+
+<select id="pselect" parameterType="map" resultType="ProductVO">
+<![CDATA[
+select * from product
+where goods_num >= ${startrow} and goods_num <= ${endrow}
+]]>
+</select>
+
+<select id="read_count_select" parameterType="map" resultType="ProductVO">
+<![CDATA[
+select * from (select * from product order by read_count desc)
+where rownum <= ${endrow}
+]]>
+</select>
+
+<select id="write_date_select" parameterType="map" resultType="ProductVO">
+<![CDATA[
+select * from (select * from product order by write_date desc)
+where rownum <= ${endrow}
+]]>
+</select>
+
+<select id="low_price_select" parameterType="map" resultType="ProductVO">
+<![CDATA[
+select * from (select * from product order by price asc)
+where rownum <= ${endrow}
+]]>
+</select>
+
+<select id="high_price_select" parameterType="map" resultType="ProductVO">
+<![CDATA[
+select * from (select * from product order by price desc)
+where rownum <= ${endrow}
+]]>
+</select>
+
+<insert id="pinsert" parameterType="ProductVO">
+insert into product (goods_num, goods_name, price, image, category, energy_efcnc, liter, read_count, write_date)
+values(#{goods_num}, #{goods_name}, #{price}, #{image}, #{category}, #{energy_efcnc}, #{liter}, 0, sysdate)
+</insert>
+
+<select id="pdetail" parameterType="int" resultType="ProductVO">
+select * from product
+where goods_num = #{goods_num}
+</select>
+
+<update id="pread_count" parameterType="int">
+update product set read_count = read_count + 1 
+where goods_num = #{goods_num}
+</update>
+
+<update id="pupdate" parameterType="ProductVO">
+update product set goods_name = #{goods_name}, price = #{price}, image = #{image}, category = #{category}, energy_efcnc = #{energy_efcnc}, liter = #{liter}, write_date = sysdate
+where goods_num = #{goods_num}
+</update>
+
+<delete id="pdelete" parameterType="int">
+delete from product
+where goods_num = #{goods_num} 
+</delete>
+
+<select id="psearch" parameterType="Hashmap" resultType="ProductVO">
+<![CDATA[
+select * from product
+where goods_name like '%${keyword}%' and goods_num >= ${startrow} and goods_num <= ${startrow} + 4
+]]>
+</select>
+
+<select id="psearchcount" parameterType="String" resultType="int">
+select count(*) from product
+where goods_name like '%${value}%'
+</select>
+</mapper>

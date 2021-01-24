@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<typeAliases>
+<!--  별칭 사용 -->
+<typeAlias alias="MemberVO" type="project.p502.spring.member.VO.MemberVO"/>
+<typeAlias type="project.p502.spring.product.VO.ProductVO" alias="ProductVO"/>
+<typeAlias type="project.p502.spring.basket.VO.BasketVO" alias="BasketVO"/>
+<typeAlias type="project.p502.spring.qna.VO.QnaVO" alias="QnaVO"/>
+</typeAliases>
+<!-- <typeHandlers>
+자료형 강제 주입
+<typeHandler javaType="org.springframework.web.multipart.MultipartFile" handler=""/>
+<typeHandler javaType="java.sql.Date" handler="org.a"/> -->
+
+</configuration> 
